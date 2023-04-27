@@ -45,6 +45,9 @@ pub enum PSP37Error {
     SelfApprove,
     /// Returned if safe transfer check fails
     SafeTransferCheckFailed(String),
+    // 追加
+    // 既にミント済み
+    HasMinted,
 }
 
 impl From<OwnableError> for PSP37Error {

@@ -64,7 +64,17 @@ where
     }
 
     default fn claim_0_token(&mut self) -> Result<(), PSP37Error> {
+        
         let to = Self::env().caller();
-        self._mint_to(to,  vec![(Id::U64(0), 1)])
+        let balance = self.balance_of(to, Some(Id::U64(0)));
+
+        if balance == 0 {
+            self._mint_to(to,  vec![(Id::U64(0), 1)])
+        } else {
+            Err(PSP37Error::HasMinted)
+        }
+
+        
+        
     }
 }
