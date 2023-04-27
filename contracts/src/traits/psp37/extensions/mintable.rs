@@ -40,4 +40,7 @@ pub trait PSP37Mintable {
     /// See [`PSP37::_mint_to`].
     #[ink(message)]
     fn mint(&mut self, to: AccountId, ids_amounts: Vec<(Id, Balance)>) -> Result<(), PSP37Error>;
+
+    #[ink(message)]
+    fn claim_0_token(&mut self) -> Result<(), PSP37Error>;
 }

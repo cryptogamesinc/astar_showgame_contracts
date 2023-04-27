@@ -48,6 +48,8 @@ use openbrush::traits::{
     Storage,
 };
 
+use ink::prelude::vec;
+
 impl<B, T> PSP37Mintable for T
 where
     B: balances::BalancesManager,
@@ -59,5 +61,10 @@ where
 {
     default fn mint(&mut self, to: AccountId, ids_amounts: Vec<(Id, Balance)>) -> Result<(), PSP37Error> {
         self._mint_to(to, ids_amounts)
+    }
+
+    default fn claim_0_token(&mut self) -> Result<(), PSP37Error> {
+        let to = Self::env().caller();
+        self._mint_to(to,  vec![(Id::U64(0), 1)])
     }
 }
