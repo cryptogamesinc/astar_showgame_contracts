@@ -12,13 +12,17 @@ pub mod my_psp37_enumerable {
         },
         traits::Storage,
     };
+    use ink::prelude::string::String;
 
     #[derive(Default, Storage)]
     #[ink(storage)]
     pub struct Contract {
         #[storage_field]
         psp37: psp37::Data<enumerable::Balances>,
+
+        base_uri: String
     }
+
 
     impl PSP37 for Contract {}
 
@@ -34,6 +38,15 @@ pub mod my_psp37_enumerable {
         #[ink(constructor)]
         pub fn new() -> Self {
             Self::default()
+        }
+        #[ink(message)]
+        pub fn set_base_uri(&mut self, base_uri: String) -> Result<(), PSP37Error> {
+            self.base_uri = base_uri;
+            Ok(())
+        }
+        #[ink(message)]
+        pub fn get_base_uri(&self) -> String {
+            self.base_uri.clone()
         }
     }
 }
