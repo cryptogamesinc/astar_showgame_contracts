@@ -1,7 +1,7 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 #![feature(min_specialization)]
 
-pub use self::my_psp22_mintable::{Contract, ContractRef};
+pub use self::my_psp22_mintable::{Contract, ContractRef}; // add
 
 #[openbrush::contract]
 pub mod my_psp22_mintable {
@@ -9,6 +9,7 @@ pub mod my_psp22_mintable {
         contracts::psp22::extensions::mintable::*,
         traits::Storage,
     };
+    use ink::prelude::vec::Vec;
 
     #[ink(storage)]
     #[derive(Default, Storage)]
@@ -33,6 +34,12 @@ pub mod my_psp22_mintable {
         #[ink(message)]
         pub fn mint_to(&mut self, account: AccountId, amount: Balance) -> Result<(), PSP22Error> {
             self.mint(account, amount)
+        }
+
+        #[ink(message)]
+        pub fn transfer_from_contract(&mut self, from: AccountId, to: AccountId, value: Balance, data: Vec<u8>) -> Result<(), PSP22Error> {
+            self._transfer_from_to(from, to, value, data)?;
+            Ok(())
         }
     }
 }
