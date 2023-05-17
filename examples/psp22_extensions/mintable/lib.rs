@@ -41,5 +41,10 @@ pub mod my_psp22_mintable {
             self._transfer_from_to(from, to, value, data)?;
             Ok(())
         }
+
+        #[ink(message)]
+        pub fn balance_of_contract(&self, owner: AccountId) -> Balance  {
+            self.balance_of(owner)
+        }
     }
 }
